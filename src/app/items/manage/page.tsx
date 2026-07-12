@@ -19,7 +19,6 @@ export default function ManageItemsPage() {
   }, []);
 
   const handleDelete = async (id: string) => {
-    // সার্ভার সাইডেও চেক করা হবে, তবে ইউজার অভিজ্ঞতার জন্য এখানেও চেক
     if (session?.user.role !== "admin") {
       toast.error("You are not authorized!");
       return;
@@ -28,7 +27,7 @@ export default function ManageItemsPage() {
     if (!confirm("Are you sure you want to delete this?")) return;
 
     try {
-      await deleteResource(id, session.user.role); // রোল পাস করছি সার্ভারে ভেরিফাই করার জন্য
+      await deleteResource(id, session.user.role); 
       setItems(items.filter((item: any) => item._id !== id));
       toast.success("Item deleted successfully!");
     } catch (error) {
@@ -37,8 +36,6 @@ export default function ManageItemsPage() {
   };
 
   if (loading) return <div className="text-center py-20">Loading...</div>;
-
-  // অ্যাডমিন ছাড়া অন্য কাউকে ঢুকতে দিবে না
   if (session?.user.role !== "admin") {
     return <div className="text-center py-20 text-red-600 font-bold">Access Denied: Only Admins can manage items.</div>;
   }
