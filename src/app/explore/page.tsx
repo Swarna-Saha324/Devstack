@@ -1,48 +1,58 @@
-import { MongoClient } from "mongodb";
-import Image from "next/image";
+"use client"; // যেহেতু স্টেট ব্যবহার করছি, তাই এটি ক্লায়েন্ট কম্পোনেন্ট
+import { useState, useEffect } from "react";
+import ResourceCard from "@/components/ResourceCard";
 
-async function getResources() {
-  const client = await MongoClient.connect(process.env.MONGODB_URI!);
-  const db = client.db("devstack");
-  return await db.collection("resources").find().toArray();
-}
+export default function ExplorePage() {
+  const [resources, setResources] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [category, setCategory] = useState("All");
+  const [sortOrder, setSortOrder] = useState("low-to-high");
 
-export default async function ExplorePage() {
-  const resources = await getResources();
+  // ডাটা ফেচ করা
+  useEffect(() => {
+    fetch("/api/resources")
+      .then((res) => res.json())
+      .then((data) => setResources(data));
+  }, []);
+
+  // সার্চ, ফিল্টার এবং সর্টিং লজিক
+  const processedResources = resources
+    .filter((item: any) => {
+      const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCategory = category === "All" || item.category === category;
+      return matchesSearch && matchesCategory;
+    })
+    .sort((a: any, b: any) => {
+      return sortOrder === "low-to-high" ? a.price - b.price : b.price - a.price;
+    });
 
   return (
     <div className="min-h-screen bg-slate-50 py-12 px-4">
       <div className="container mx-auto">
-        <h1 className="text-4xl font-extrabold text-slate-900 mb-2">Explore Resources</h1>
-        <p className="text-slate-500 mb-10">Discover tools crafted by developers for developers.</p>
+        {/* সার্চ এবং কন্ট্রোল বার */}
+        <div className="flex flex-col md:flex-row gap-4 mb-10 bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+          <input 
+            type="text" 
+            placeholder="Search resources..." 
+            className="flex-1 px-4 py-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-indigo-500"
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <select className="px-4 py-3 rounded-xl border border-slate-200 outline-none" onChange={(e) => setCategory(e.target.value)}>
+            <option value="All">All Categories</option>
+            <option value="Frontend">Frontend</option>
+            <option value="Backend">Backend</option>
+            <option value="AI">AI</option>
+          </select>
+          <select className="px-4 py-3 rounded-xl border border-slate-200 outline-none" onChange={(e) => setSortOrder(e.target.value)}>
+            <option value="low-to-high">Price: Low to High</option>
+            <option value="high-to-low">Price: High to Low</option>
+          </select>
+        </div>
 
-        {/* গ্রিড লেআউট */}
+        {/* গ্রিড */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {resources.map((item: any) => (
-            <div key={item._id.toString()} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 border border-slate-100 group">
-              {/* ইমেজ সেকশন */}
-              <div className="h-48 w-full overflow-hidden">
-                <img 
-                  src={item.image} 
-                  alt={item.title} 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                />
-              </div>
-              
-              {/* কার্ডের কন্টেন্ট */}
-              <div className="p-6">
-                <span className="text-xs font-bold text-indigo-600 uppercase tracking-wider">{item.category}</span>
-                <h3 className="text-xl font-bold text-slate-900 mt-2">{item.title}</h3>
-                <p className="text-slate-600 text-sm mt-2 line-clamp-2">{item.description}</p>
-                
-                <div className="flex justify-between items-center mt-6">
-                  <span className="text-lg font-bold text-slate-900">${item.price}</span>
-                  <button className="px-4 py-2 bg-indigo-50 text-indigo-700 rounded-lg font-semibold hover:bg-indigo-600 hover:text-white transition">
-                    View Details
-                  </button>
-                </div>
-              </div>
-            </div>
+          {processedResources.map((item: any) => (
+            <ResourceCard key={item._id} item={item} />
           ))}
         </div>
       </div>
