@@ -1,10 +1,12 @@
 "use client";
+import { useState } from 'react';
 import Link from 'next/link';
 import { authClient } from "@/lib/auth-client";
 import Button from './Button';
 
 export default function Navbar() {
   const { data: session } = authClient.useSession();
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleLogout = async () => {
     await authClient.signOut();
@@ -12,17 +14,38 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm border-b border-slate-100 p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <Link href="/" className="text-xl font-bold text-indigo-600">DevStack Hub</Link>
-        <ul className="flex gap-6 items-center">
-          <li><Link href="/" className="text-slate-600 hover:text-indigo-600 transition">Home</Link></li>
-          <li><Link href="/explore" className="text-slate-600 hover:text-indigo-600 transition">Explore</Link></li>
+    // এখানে গ্র্যাডিয়েন্ট ব্যাকগ্রাউন্ড যোগ করা হয়েছে
+    <nav className="sticky top-0 z-50 bg-gradient-to-r from-[#FFEBE8] to-[#D7F7E1] shadow-sm border-b border-white/50">
+      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+        
+        <Link href="/" className="text-2xl font-black text-indigo-700 tracking-tight">
+          DevStack<span className="text-slate-800">Hub</span>
+        </Link>
+
+        <button className="md:hidden text-slate-800" onClick={() => setIsOpen(!isOpen)}>
+          {isOpen ? "✕" : "☰"}
+        </button>
+
+        <ul className={`${isOpen ? 'flex' : 'hidden'} md:flex flex-col md:flex-row absolute md:relative top-full left-0 w-full md:w-auto bg-white/90 md:bg-transparent p-4 md:p-0 gap-4 md:gap-6 items-center`}>
+          
+          {/* সবার জন্য দৃশ্যমান */}
+          <li><Link href="/" className="text-slate-800 hover:text-indigo-700 font-semibold">Home</Link></li>
+          <li><Link href="/about" className="text-slate-800 hover:text-indigo-700 font-semibold">About</Link></li>
+          <li><Link href="/contact" className="text-slate-800 hover:text-indigo-700 font-semibold">Contact</Link></li>
+
           {session ? (
             <>
-              <li><Link href="/items/add" className="text-slate-600 hover:text-indigo-600 transition">Add Item</Link></li>
-              <li className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center font-bold text-indigo-700 border border-indigo-200">
+              {/* লগইন করা সবার জন্য */}
+              <li><Link href="/explore" className="text-slate-800 hover:text-indigo-700 font-semibold">Explore</Link></li>
+              <li><Link href="/items/add" className="text-slate-800 hover:text-indigo-700 font-semibold">Add Item</Link></li>
+              
+              {/* শুধু অ্যাডমিনদের জন্য */}
+              {session.user.role === "admin" && (
+                <li><Link href="/items/manage" className="text-red-700 hover:text-red-900 font-bold">Manage Items</Link></li>
+              )}
+              
+              <li className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-indigo-700 flex items-center justify-center text-white font-bold text-sm">
                   {session.user.name?.charAt(0).toUpperCase()}
                 </div>
                 <Button onClick={handleLogout} variant="danger">Logout</Button>
@@ -30,7 +53,8 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <li><Link href="/login" className="text-indigo-600 font-semibold hover:underline">Login</Link></li>
+              {/* লগইন না থাকলে */}
+              <li><Link href="/login" className="text-indigo-700 font-semibold hover:underline">Login</Link></li>
               <li><Link href="/register"><Button variant="primary">Register</Button></Link></li>
             </>
           )}

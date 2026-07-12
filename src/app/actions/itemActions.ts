@@ -1,6 +1,7 @@
 "use server";
 import { revalidatePath } from "next/cache";
 import clientPromise from "@/lib/mongodb"; 
+import { ObjectId } from "mongodb";
 
 export async function addItem(formData: FormData) {
   const title = formData.get("title") as string;
@@ -29,4 +30,15 @@ export async function addItem(formData: FormData) {
     console.error("Database error:", error);
     throw new Error("Failed to save data");
   }
+}
+
+export async function deleteResource(id: string, role: string) {
+  if (role !== "admin") {
+    throw new Error("Unauthorized");
+  }
+
+  const client = await clientPromise;
+  const db = client.db("devstack");
+  await db.collection("resources").deleteOne({ _id: new ObjectId(id) });
+  revalidatePath("/items/manage");
 }
