@@ -14,7 +14,7 @@ export default function Navbar() {
   };
 
   return (
-    // এখানে গ্র্যাডিয়েন্ট ব্যাকগ্রাউন্ড যোগ করা হয়েছে
+    
     <nav className="sticky top-0 z-50 bg-gradient-to-r from-[#FFEBE8] to-[#D7F7E1] shadow-sm border-b border-white/50">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         
@@ -28,7 +28,7 @@ export default function Navbar() {
 
         <ul className={`${isOpen ? 'flex' : 'hidden'} md:flex flex-col md:flex-row absolute md:relative top-full left-0 w-full md:w-auto bg-white/90 md:bg-transparent p-4 md:p-0 gap-4 md:gap-6 items-center`}>
           
-          {/* সবার জন্য দৃশ্যমান */}
+         
           <li><Link href="/" className="text-slate-800 hover:text-indigo-700 font-semibold">Home</Link></li>
           <li><Link href="/about" className="text-slate-800 hover:text-indigo-700 font-semibold">About</Link></li>
           <li><Link href="/contact" className="text-slate-800 hover:text-indigo-700 font-semibold">Contact</Link></li>
@@ -39,8 +39,8 @@ export default function Navbar() {
               <li><Link href="/explore" className="text-slate-800 hover:text-indigo-700 font-semibold">Explore</Link></li>
               <li><Link href="/items/add" className="text-slate-800 hover:text-indigo-700 font-semibold">Add Item</Link></li>
               
-              {/* শুধু অ্যাডমিনদের জন্য */}
-              {session.user.role === "admin" && (
+              
+             {(session.user as any)?.role === "admin" && (
                 <li><Link href="/items/manage" className="text-red-700 hover:text-red-900 font-bold">Manage Items</Link></li>
               )}
               

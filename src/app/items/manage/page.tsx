@@ -18,16 +18,19 @@ export default function ManageItemsPage() {
       });
   }, []);
 
-  const handleDelete = async (id: string) => {
-    if (session?.user.role !== "admin") {
+const handleDelete = async (id: string) => {
+  const userRole = (session?.user as any)?.role;
+   //if (session?.user.role !== "admin") {
+   if (userRole !== "admin") {
+                        
       toast.error("You are not authorized!");
       return;
-    }
+       }
 
     if (!confirm("Are you sure you want to delete this?")) return;
 
     try {
-      await deleteResource(id, session.user.role); 
+      await deleteResource(id, userRole); 
       setItems(items.filter((item: any) => item._id !== id));
       toast.success("Item deleted successfully!");
     } catch (error) {
@@ -36,7 +39,7 @@ export default function ManageItemsPage() {
   };
 
   if (loading) return <div className="text-center py-20">Loading...</div>;
-  if (session?.user.role !== "admin") {
+ if ((session?.user as any)?.role !== "admin"){
     return <div className="text-center py-20 text-red-600 font-bold">Access Denied: Only Admins can manage items.</div>;
   }
 

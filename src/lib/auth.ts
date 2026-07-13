@@ -6,7 +6,11 @@ const client = new MongoClient(process.env.MONGODB_URI || "mongodb://localhost:2
 const db = client.db("devstack");
 
 export const auth = betterAuth({
-  database: mongodbAdapter(db), 
+  database: mongodbAdapter(db),
+  baseURL: process.env.BETTER_AUTH_URL, 
+  trustedOrigins: [
+        "https://my-devstack-hub.vercel.app" // আপনার বর্তমান লাইভ ডোমেইনটি এখানে দিন
+    ],
   user: {
     additionalFields: {
       role: {

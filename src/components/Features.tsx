@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 
-// ১. কার্ডটিকে আলাদা করা হয়েছে যাতে প্রতিটি আইটেম তার নিজের আইডি পায়
+
 function ResourceCard({ item }: { item: any }) {
   const router = useRouter();
   const { data: session } = authClient.useSession();
