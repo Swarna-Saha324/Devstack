@@ -2,6 +2,9 @@ import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroBanner";
 import { FeaturesSection } from "@/components/Features"; 
 import clientPromise from "@/lib/mongodb";
+import { HowItWorks } from "@/components/HowItWorks";
+import { Newsletter } from "@/components/Newsletter";
+import { Testimonials } from "@/components/Testimonials";
 
 async function getResources() {
   const client = await clientPromise;
@@ -26,6 +29,9 @@ export default async function Home() {
     <div>
       <HeroSection />
       <FeaturesSection items={items} />
+      <HowItWorks />
+      
+      <Testimonials/>
       <Footer />
     </div>
   );
