@@ -5,7 +5,7 @@ import { addItem } from "@/app/actions/itemActions";
 export default function AddItemPage() {
   return (
     <div className="min-h-screen bg-slate-50 py-12 px-4">
-      <div className="max-w-xl mx-auto bg-white p-8 rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100">
+      <div className="max-w-xl mx-auto bg-gradient-to-br from-[#FFEBE8] to-[#D7F7E1]  p-8 rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100">
         <h2 className="text-3xl font-extrabold text-slate-900 mb-2">Add New Resource</h2>
         <p className="text-slate-500 mb-8">Fill in the details to share your tool with the community.</p>
         

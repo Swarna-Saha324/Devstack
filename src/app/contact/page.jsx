@@ -14,16 +14,19 @@ export default function ContactPage() {
           </div>
         </div>
 
-        <form className="bg-white/60 backdrop-blur-md p-8 rounded-2xl shadow-xl border border-white">
-          <div className="space-y-5">
-            <input type="text" placeholder="Your Name" className="w-full p-4 rounded-xl border border-white focus:ring-2 focus:ring-indigo-400 outline-none" />
-            <input type="email" placeholder="Your Email" className="w-full p-4 rounded-xl border border-white focus:ring-2 focus:ring-indigo-400 outline-none" />
-            <textarea placeholder="Your Message" className="w-full p-4 rounded-xl border border-white h-32 focus:ring-2 focus:ring-indigo-400 outline-none"></textarea>
-            <button className="w-full bg-indigo-700 hover:bg-indigo-800 text-white font-bold py-4 rounded-xl transition shadow-lg">
-              Send Message
-            </button>
-          </div>
-        </form>
+    
+<div className="bg-white/60 backdrop-blur-md p-8 rounded-2xl shadow-xl border border-white text-center">
+  <h2 className="text-2xl font-bold text-slate-800 mb-6">Send us an Email</h2>
+  <p className="text-slate-600 mb-8">
+    Click the button below to open your email client and send us a message directly.
+  </p>
+  <a 
+    href="mailto:support@devstackhub.com?subject=Inquiry from DevStackHub"
+    className="inline-block bg-indigo-700 hover:bg-indigo-800 text-white font-bold py-4 px-10 rounded-xl transition shadow-lg"
+  >
+    Open Email App
+  </a>
+</div>
       </div>
     </div>
   );
