@@ -69,10 +69,13 @@ An admin has full access to:
 | Next.js | Full-stack React Framework |
 | TypeScript | Type-safe Development |
 | Tailwind CSS | Styling |
-| DaisyUI | UI Components |
+| React Toastify | Toast Notifications |
 | Better Auth | Authentication |
+| JWT | Authentication & Authorization |
+| proxy.js | Route Protection |
 | MongoDB | Database |
 | Vercel | Deployment |
+
 
 ---
 
