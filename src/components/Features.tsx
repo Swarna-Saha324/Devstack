@@ -23,7 +23,7 @@ function ResourceCard({ item }: { item: any }) {
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="p-8 bg-slate-50 rounded-3xl border border-slate-100 shadow-sm"
+      className="p-8 bg-gradient-to-br from-[#FFEBE8] to-[#D7F7E1]  rounded-3xl border border-slate-100 shadow-sm"
     >
       <div className="h-48 w-full overflow-hidden rounded-xl mb-4">
         <img src={item.image} alt={item.title} className="w-full h-full object-cover" />

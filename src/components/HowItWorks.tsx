@@ -7,7 +7,7 @@ export function HowItWorks() {
   ];
 
   return (
-    <section className="py-20 bg-slate-50">
+    <section className="py-20 bg-gradient-to-br from-[#FFEBE8] to-[#D7F7E1] ">
       <div className="container mx-auto px-4 text-center">
         <h2 className="text-3xl font-bold mb-12">How It Works</h2>
         <div className="grid md:grid-cols-3 gap-8">

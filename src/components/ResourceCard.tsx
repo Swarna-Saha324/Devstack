@@ -20,7 +20,7 @@ export default function ResourceCard({ item }: { item: any }) {
   };
 
   return (
-    <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 border border-slate-100 group">
+    <div className="bg-gradient-to-br from-[#FFEBE8] to-[#D7F7E1] rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 border border-slate-100 group">
       {/* ইমেজ সেকশন */}
       <div className="h-48 w-full overflow-hidden">
         <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
