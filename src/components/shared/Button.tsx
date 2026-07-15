@@ -3,9 +3,17 @@ interface ButtonProps {
   onClick?: () => void;
   type?: "button" | "submit";
   variant?: "primary" | "secondary" | "danger";
+  className?: string; // নতুন এই প্রপটি যোগ করুন
 }
 
-export default function Button({ children, onClick, type = "button", variant = "primary" }: ButtonProps) {
+export default function Button({ 
+  children, 
+  onClick, 
+  type = "button", 
+  variant = "primary",
+  className = "" // ডিফল্ট ভ্যালু খালি রাখুন
+}: ButtonProps) {
+  
   const baseStyle = "px-5 py-2 rounded-lg font-semibold transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]";
   
   const variants = {
@@ -15,7 +23,12 @@ export default function Button({ children, onClick, type = "button", variant = "
   };
 
   return (
-    <button type={type} onClick={onClick} className={`${baseStyle} ${variants[variant]}`}>
+    // এখানে ${className} যোগ করা হয়েছে
+    <button 
+      type={type} 
+      onClick={onClick} 
+      className={`${baseStyle} ${variants[variant]} ${className}`}
+    >
       {children}
     </button>
   );
