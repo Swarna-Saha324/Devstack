@@ -1,14 +1,20 @@
-export function Newsletter() {
+export default function QuickLinks() {
   return (
-    <section className="py-20 bg-indigo-700 text-white text-center">
+    <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold mb-4">Stay Updated</h2>
-        <p className="mb-8 opacity-90">Get the latest developer tools and resources delivered to your inbox.</p>
-        <div className="max-w-md mx-auto flex gap-2">
-          <input type="email" placeholder="Enter your email" className="w-full px-4 py-3 rounded-lg text-slate-900" />
-          <button className="px-6 py-3 bg-white text-indigo-700 font-bold rounded-lg hover:bg-slate-100 transition">
-            Subscribe
-          </button>
+        <h2 className="text-3xl font-bold text-center mb-12">Quick Access</h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {[
+            { title: "Documentation", desc: "Read our guides" },
+            { title: "Browse Tools", desc: "Latest marketplace" },
+            { title: "Submit Tool", desc: "Add your work" },
+            { title: "Support", desc: "Get in touch" },
+          ].map((item, index) => (
+            <div key={index} className="p-6 border border-slate-200 rounded-xl text-center bg-gradient-to-br from-[#FFEBE8] to-[#D7F7E1] hover:shadow-xl transition cursor-pointer">
+              <h3 className="font-bold text-lg mb-1">{item.title}</h3>
+              <p className="text-sm text-slate-500">{item.desc}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
